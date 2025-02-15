@@ -14,7 +14,9 @@ class Item {
     private Long id;
     private String text;
 
-    Item(String text) {
+    protected Item() {}
+
+    public Item(String text) {
         this.text = text;
     }
 
