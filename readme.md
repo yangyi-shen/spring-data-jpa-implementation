@@ -5,7 +5,7 @@ This is an instructional implementation of Spring Data JPA, mainly intended to i
 # todo-list
 
 - [x] Initialize Spring Boot project
-- [ ] Create JPA repository
+- [x] Create JPA repository
 - [ ] Create controller w/ methods for CRUD operations
 - [ ] Create method to get database summary and tie to GET /
 - [ ] Put on finishing touches
