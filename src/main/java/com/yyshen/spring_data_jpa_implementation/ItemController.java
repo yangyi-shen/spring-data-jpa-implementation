@@ -19,9 +19,8 @@ public class ItemController {
         this.repository = repository;
     }
 
-    @GetMapping("/api")
+    @GetMapping("/api/all")
     public List<ItemResource> getAll() {
-        // replace with more comprehensive and neatly laid out database summary later
         return this.repository.findAll().stream()
             .map(item -> new ItemResource("success", item))
             .collect(Collectors.toList());
