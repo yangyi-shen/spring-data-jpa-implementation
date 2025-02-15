@@ -7,5 +7,11 @@ This is an instructional implementation of Spring Data JPA, mainly intended to i
 - [x] Initialize Spring Boot project
 - [x] Create JPA repository
 - [ ] Create controller w/ methods for CRUD operations
+- - [ ] /api/create?text={text}: Create new item based on text parameter
+- - [ ] /api/read?id={id}: Return content of item with specified ID
+- - [ ] /api/read?id=random: Get random database item
+- - [ ] /api/read:id=all: Get every item in database
+- - [ ] /api/update?id={id}&text={text}: Update text of item with specified ID
+- - [ ] /api/delete?id={id}: Delete item with specified ID
 - [ ] Create method to get database summary and tie to GET /
 - [ ] Put on finishing touches
