@@ -22,7 +22,7 @@ public class ItemController {
     }
 
     @GetMapping("/api/create")
-    public String write(@RequestParam String text) {
+    public String create(@RequestParam String text) {
         // make sure text param isn't empty
         if (text.trim() == "") {
             return "error: text parameter is empty or not provided";
@@ -40,9 +40,9 @@ public class ItemController {
 
             return getItem(formattedId);
         } catch (Exception e) {
-            if (id == "random") {
+            if (id.equals("random")) {
                 return getRandom();
-            } else if (id == "all") {
+            } else if (id.equals("all")) {
                 return getAll();
             } else {
                 // create ItemResource with error message and null value, and return
