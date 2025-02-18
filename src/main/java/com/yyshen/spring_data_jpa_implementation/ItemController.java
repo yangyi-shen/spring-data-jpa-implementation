@@ -24,7 +24,7 @@ public class ItemController {
     @GetMapping("/api/create")
     public ItemResource create(@RequestParam String text) {
         // make sure text param isn't empty
-        if (text.trim() == "") {
+        if (text == null || text.trim() == "") {
             return new ItemResource("error: text parameter is empty or not provided", NULL);
         } else {
             return createItem(text);
@@ -57,16 +57,32 @@ public class ItemController {
 
     @GetMapping("/api/update")
     public ItemResource update(@RequestParam String id, @RequestParam String text) {
-        // check if id can be converted to numeric value and try to update element; if not, check for various errors
+        // check if id can be converted to numeric value and try to update element; if
+        // not, check for various errors
         try {
             Long formattedId = Long.parseLong(id);
 
             return updateItem(formattedId, text);
         } catch (Exception e) {
-            if (id.trim().equals("")) {
-                return new ItemResource("error: no id provided", NULL);
-            } else if (text.trim().equals("")) {
-                return new ItemResource("error: no text provided", NULL);
+            if (id == null || id.trim().equals("")) {
+                return new ItemResource("error: id parameter is empty or not provided", NULL);
+            } else if (text == null || text.trim().equals("")) {
+                return new ItemResource("error: id parameter is empty or not provided", NULL);
+            } else {
+                return new ItemResource("error: no url parameters provided", NULL);
+            }
+        }
+    }
+
+    @GetMapping("/api/delete")
+    public ItemResource delete(@RequestParam String id) {
+        try {
+            Long formattedId = Long.parseLong(id);
+
+            return deleteItem(formattedId);
+        } catch (Exception e) {
+            if (id == null || id.trim().equals("")) {
+                return new ItemResource("error: id parameter is empty or not provided", NULL);
             } else {
                 return new ItemResource("error: no url parameters provided", NULL);
             }
@@ -95,7 +111,7 @@ public class ItemController {
 
         this.repository.findById(id).ifPresentOrElse(
                 item -> ItemResourceList.add(new ItemResource("success", item)),
-                () -> ItemResourceList.add(new ItemResource("error: item with ID " + id + "does not exist", NULL)));
+                () -> ItemResourceList.add(new ItemResource("error: item with ID " + id + " does not exist", NULL)));
 
         return ItemResourceList;
     }
@@ -117,10 +133,21 @@ public class ItemController {
         if (itemOptional.isPresent()) {
             Item item = itemOptional.get();
             item.setText(text);
-            this.repository.save(item); 
+            this.repository.save(item);
             return new ItemResource("success", item);
         } else {
-            return new ItemResource("error: item with ID " + id + "does not exist", NULL);
+            return new ItemResource("error: item with ID " + id + " does not exist", NULL);
+        }
+    }
+
+    public ItemResource deleteItem(Long id) {
+        Optional<Item> itemOptional = this.repository.findById(id);
+        if (itemOptional.isPresent()) {
+            this.repository.deleteById(id);
+
+            return new ItemResource("success", NULL);
+        } else {
+            return new ItemResource("failure: item with ID " + id + " does not exist", NULL);
         }
     }
 }
