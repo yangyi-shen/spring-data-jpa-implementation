@@ -21,6 +21,24 @@ public class ItemController {
         this.repository = repository;
     }
 
+    @GetMapping("/")
+    public String returnDatabaseSummary() {
+        Long databaseItemCount = this.repository.count();
+        List<ItemResource> databaseItems = readAll();
+
+        String databaseSummaryTemplate = """
+                -----------------------------------------------------------------<br>
+                🎺🪽 BEHOLD, THE INCREDIBLE SPRING DATA JPA IMPLEMENTATION!!! 🪽🎺<br>
+                -----------------------------------------------------------------<br>
+                <br>
+                NUMBER OF ITEMS IN DATABASE: %s                                  <br>
+                DATABASE CONTENTS:                                               <br>
+                    """ + databaseItems;
+        String databaseSummary = String.format(databaseSummaryTemplate, databaseItemCount);
+
+        return databaseSummary;
+    }
+
     @GetMapping("/api/create")
     public ItemResource create(@RequestParam String text) {
         // make sure text param isn't empty
