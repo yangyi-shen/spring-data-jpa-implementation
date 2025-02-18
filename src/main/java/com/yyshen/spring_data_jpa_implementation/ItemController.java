@@ -55,6 +55,24 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/api/update")
+    public ItemResource update(@RequestParam String id, @RequestParam String text) {
+        // check if id can be converted to numeric value and try to update element; if not, check for various errors
+        try {
+            Long formattedId = Long.parseLong(id);
+
+            return updateItem(formattedId, text);
+        } catch (Exception e) {
+            if (id.trim().equals("")) {
+                return new ItemResource("error: no id provided", NULL);
+            } else if (text.trim().equals("")) {
+                return new ItemResource("error: no text provided", NULL);
+            } else {
+                return new ItemResource("error: no url parameters provided", NULL);
+            }
+        }
+    }
+
     public ItemResource createItem(String text) {
         Item newItem = new Item(text);
 
@@ -63,7 +81,7 @@ public class ItemController {
         Optional<Item> duplicateItem = this.repository.findOne(newItemExample);
 
         if (duplicateItem.isPresent()) {
-            return new ItemResource("failure: item with same content already exists", NULL);
+            return new ItemResource("error: item with same content already exists", NULL);
         } else {
             // save item
             this.repository.save(newItem);
@@ -94,5 +112,15 @@ public class ItemController {
         return ItemResourceList;
     }
 
-
+    public ItemResource updateItem(Long id, String text) {
+        Optional<Item> itemOptional = this.repository.findById(id);
+        if (itemOptional.isPresent()) {
+            Item item = itemOptional.get();
+            item.setText(text);
+            this.repository.save(item); 
+            return new ItemResource("success", item);
+        } else {
+            return new ItemResource("error: item with ID " + id + "does not exist", NULL);
+        }
+    }
 }
