@@ -2,6 +2,12 @@
 
 This is an instructional implementation of Spring Data JPA, mainly intended to improve my fluency with Spring Boot in general. The goal is to be able to perform CRUD operations on the JPA repository by GETting select url paths (e.g. /write/pizza adds string "pizza" to the repository). GET / will return a summary of the entire database.
 
+# how to run:
+1. Download this repository
+2. Enter the project, from whatever directory you've stored it in
+3. Run ```mvn spring-boot:run```
+4. Behold, my glorious Spring Data JPA implementation!
+
 # todo-list
 
 - [x] Initialize Spring Boot project
