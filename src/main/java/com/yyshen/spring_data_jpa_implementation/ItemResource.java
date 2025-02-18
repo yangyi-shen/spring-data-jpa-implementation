@@ -45,6 +45,14 @@ class ItemResource {
 
     @Override
     public String toString() {
-        return "ItemResource[status=" + this.status + ", content=" + this.content + "]";
+        String template = """
+                <pre>
+                ItemResource [
+                    status=%s,
+                    content=%s,
+                ]
+                </pre>
+                """;
+        return String.format(template, this.status, this.content);
     }
 }
