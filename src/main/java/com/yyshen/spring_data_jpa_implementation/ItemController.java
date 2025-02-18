@@ -27,7 +27,7 @@ public class ItemController {
         if (text.trim() == "") {
             return new ItemResource("error: text parameter is empty or not provided", NULL);
         } else {
-            return setItem(text);
+            return createItem(text);
         }
     }
 
@@ -38,7 +38,7 @@ public class ItemController {
         try {
             Long formattedId = Long.parseLong(id);
 
-            return getItem(formattedId);
+            return readItem(formattedId);
         } catch (Exception e) {
             if (id.equals("random")) {
                 return getRandom();
@@ -55,7 +55,7 @@ public class ItemController {
         }
     }
 
-    public ItemResource setItem(String text) {
+    public ItemResource createItem(String text) {
         Item newItem = new Item(text);
 
         // check if item with same text content already exists
@@ -72,7 +72,7 @@ public class ItemController {
         }
     }
 
-    public List<ItemResource> getItem(Long id) {
+    public List<ItemResource> readItem(Long id) {
         List<ItemResource> ItemResourceList = new ArrayList<ItemResource>();
 
         this.repository.findById(id).ifPresentOrElse(
@@ -83,7 +83,7 @@ public class ItemController {
     }
 
     public List<ItemResource> getRandom() {
-        return getItem(RANDOMIZER.nextLong(1, repository.count() + 1));
+        return readItem(RANDOMIZER.nextLong(1, repository.count() + 1));
     }
 
     public List<ItemResource> getAll() {
