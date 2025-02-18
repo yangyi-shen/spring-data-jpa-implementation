@@ -41,9 +41,9 @@ public class ItemController {
             return readItem(formattedId);
         } catch (Exception e) {
             if (id.equals("random")) {
-                return getRandom();
+                return readRandom();
             } else if (id.equals("all")) {
-                return getAll();
+                return readAll();
             } else {
                 // create ItemResource with error message and null value, and return
                 List<ItemResource> ItemResourceList = new ArrayList<ItemResource>();
@@ -82,15 +82,17 @@ public class ItemController {
         return ItemResourceList;
     }
 
-    public List<ItemResource> getRandom() {
+    public List<ItemResource> readRandom() {
         return readItem(RANDOMIZER.nextLong(1, repository.count() + 1));
     }
 
-    public List<ItemResource> getAll() {
+    public List<ItemResource> readAll() {
         List<ItemResource> ItemResourceList = new ArrayList<ItemResource>();
 
         this.repository.findAll().forEach(item -> ItemResourceList.add(new ItemResource("success", item)));
 
         return ItemResourceList;
     }
+
+
 }
