@@ -12,6 +12,6 @@ This is an instructional implementation of Spring Data JPA, mainly intended to i
 - - [x] /api/read?id=random: Get random database item
 - - [x] /api/read:id=all: Get every item in database
 - - [x] /api/update?id={id}&text={text}: Update text of item with specified ID
-- - [ ] /api/delete?id={id}: Delete item with specified ID
+- - [x] /api/delete?id={id}: Delete item with specified ID
 - [ ] Create method to get database summary and tie to GET /
 - [ ] Put on finishing touches
