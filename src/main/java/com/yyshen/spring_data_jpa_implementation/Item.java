@@ -14,7 +14,8 @@ class Item {
     private Long id;
     private String text;
 
-    protected Item() {}
+    protected Item() {
+    }
 
     public Item(String text) {
         this.text = text;
@@ -54,6 +55,14 @@ class Item {
 
     @Override
     public String toString() {
-        return "Item[id=" + this.id + ", text=" + this.text + "]";
+        // line break on top for formatting when displaying w/ ItemResource
+        String template = """
+
+                    Item [
+                        id=%s,
+                        text="%s",
+                    ]
+                """;
+        return String.format(template, this.id, this.text);
     }
 }
