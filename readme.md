@@ -14,4 +14,4 @@ This is an instructional implementation of Spring Data JPA, mainly intended to i
 - - [x] /api/update?id={id}&text={text}: Update text of item with specified ID
 - - [x] /api/delete?id={id}: Delete item with specified ID
 - [x] Create method to get database summary and tie to GET /
-- [ ] Put on finishing touches
+- [x] Put on finishing touches
