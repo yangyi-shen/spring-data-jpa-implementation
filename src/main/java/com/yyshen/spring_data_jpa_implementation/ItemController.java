@@ -22,10 +22,10 @@ public class ItemController {
     }
 
     @GetMapping("/api/create")
-    public String create(@RequestParam String text) {
+    public ItemResource create(@RequestParam String text) {
         // make sure text param isn't empty
         if (text.trim() == "") {
-            return "error: text parameter is empty or not provided";
+            return new ItemResource("error: text parameter is empty or not provided", NULL);
         } else {
             return setItem(text);
         }
@@ -55,7 +55,7 @@ public class ItemController {
         }
     }
 
-    public String setItem(String text) {
+    public ItemResource setItem(String text) {
         Item newItem = new Item(text);
 
         // check if item with same text content already exists
@@ -63,12 +63,12 @@ public class ItemController {
         Optional<Item> duplicateItem = this.repository.findOne(newItemExample);
 
         if (duplicateItem.isPresent()) {
-            return "failure: item with same content already exists";
+            return new ItemResource("failure: item with same content already exists", NULL);
         } else {
             // save item
             this.repository.save(newItem);
 
-            return "success";
+            return new ItemResource("success", newItem);
         }
     }
 
